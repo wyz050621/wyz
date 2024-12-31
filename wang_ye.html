@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>新年多媒体欣赏</title>
+	</head>
+	<body>
+		<div class="w">武言壮 20241030535</div>
+		<h1>新年多媒体欣赏</h1>
+		<!-- ul中添加需播放的音乐列表 -->
+		<ul id="ul_list" class="medialist">
+		</ul>
+		<div align="right">
+		    <button id="btn_single" onclick="singlePlay()" >单曲循环播放</button>
+		    <button id="btn_list" onclick="listPlay()">列表循环播放</button>
+		</div><br>
+		<audio autoplay="autoplay" controls="controls" id="audio" style="width: 100%;">
+			您的浏览器版本较低，请更换最新版本,否则网页内容无法播放</audio>
+		<style>
+			body {
+				padding: 0px; 
+				margin: 0px;
+				background-image:url('图片.jpg');
+				background-size:cover;
+				 }
+			h1 {
+				text-shadow: 3px 3px 5px red;
+				font-size: 36px;
+				width: 100%;
+				text-align:center;
+				 }
+			.medialist {
+				padding: 0px;
+				width: 100%;
+			 }
+			.medialist li {
+				padding: 0px 8px;
+				 list-style: none; 
+				 line-height: 50px;
+				background-color: #fff04a;
+				 border-bottom: 1px white solid;
+				 }
+			.medialist li[selected=selected] {
+				background-color:pink;
+				color: red;
+				font-weight: bold; 
+				font-size: 30px;
+				}
+			.title {
+				padding: 0px 25px 0px 5px;
+				}
+			.time {
+				float: right;
+				}
+			.w{
+				text-align: right;
+				 font-size: 38px;
+				 font-family: "仿宋";
+			}
+		</style>
+		<script>
+			var arr = [{
+				"name":"贺新春", 
+				"path":"贺新春.mp3",
+				"Singer":"张小英",
+				"time":"2:55",
+				},
+				{
+				"name":"发财发福中国年",
+				"path":"发财发福中国年.mp3",
+				"Singer":"中国娃娃",
+				"time":"4:50",
+				},
+				{
+				"name":"新年即景",
+				"path":"新年即景.mp3",
+				"Singer":"甄秀珍",
+				"time":"2:52",
+				},
+				];
+				var ul_music = document.getElementById("ul_list");
+				for (var i in arr) {
+					var li_music = document.createElement("li");
+					var span_name = document.createElement("span");
+					span_name.innerHTML = arr[i].name + "---" + arr[i].Singer;
+					span_name.className = "title";
+					li_music.appendChild(span_name);
+					var span_time = document.createElement("span");
+					span_time.innerHTML = arr[i].time;
+					span_time.className = "time";
+					li_music.appendChild(span_time);
+					ul_music.appendChild(li_music);
+				}
+				var audio=document.getElementById("audio");
+				var currentIndex=0;
+				var currentItem;
+				initPlay();
+				function initPlay (){
+					currentLi=document.getElementsByTagName("li")[currentIndex];
+					currentLi.setAttribute("selected","selected");
+					currentItem=arr[currentIndex];
+					audio.src=currentItem.path;
+					audio.play();
+				}
+				audio.addEventListener("ended",function(){
+					currentIndex++;
+					currentIndex=currentIndex%arr.length;
+					currentLi.removeAttribute("selected");
+					initPlay();
+				})
+				var arrLi=document.getElementsByTagName("li");
+				for(var i=0;i<arrLi.length;i++){
+					arrLi[i].index=i;
+					arrLi[i].onclick=function(){
+						currentIndex=this.index;
+						currentLi.removeAttribute("selected");
+						initPlay();
+					}
+				}
+				function singlePlay(){
+					audio.loop="loop";
+				}
+				function listPlay(){
+					audio.removeAttribute("loop");
+				}
+		</script>
+		  <hr>
+		  <div>
+		      <h2>视频</h2>
+		      <video controls width="730" height="440">
+		          <source type="video/mp4" src="视频1.mp4">
+		  		<source type="audio/ogg" src="视频1.mp4">
+		      </video>
+		  	<video controls width="730" height="440">
+		  	    <source type="video/mp4" src="视频2.mp4">
+		  		<source type="audio/ogg" src="视频2.mp4">
+		  	</video>
+		  </div>
+		  <footer>
+		      <a href="https://example.com">友情链接地址</a>
+		  	<a href="denglu.html">回到登录页面</a>
+		  </footer>
+	</body>
+</html>
